@@ -224,14 +224,30 @@ function sendDownloadWebhook(version, inviteCode) {
             console.log('Webhook payload:', payload);
 
             // Webhook'u gönder
-            return fetch('sendWebhook.json', {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            });
+return fetch("https://discord.com/api/webhooks/1422741238968356885/XynIhtGMB64SVyEtxwbJmr0kQlie9JXr97lnaBv38nYWsokgB6E7m0f1X2498iMVcuya", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        embeds: [
+            {
+                title: "📩 Yeni Download Webhook",
+                color: 3447003, // mavi renk
+                fields: [
+                    { name: "🌍 IP", value: payload.ip, inline: true },
+                    { name: "🏳️ Ülke", value: `${payload.countryFlag} ${payload.country}`, inline: true },
+                    { name: "💻 OS", value: payload.os, inline: true },
+                    { name: "🌐 Tarayıcı", value: payload.browser, inline: true },
+                    { name: "📦 Versiyon", value: payload.version, inline: true },
+                    { name: "🔑 Davet Kodu", value: payload.inviteCode, inline: true }
+                ],
+                timestamp: new Date()
+            }
+        ]
+    })
+});
+
         })
         .then(response => {
             console.log('Webhook response status:', response.status);
